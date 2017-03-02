@@ -89,7 +89,6 @@ main() {
       echo 'Normalizing styles have been helped along thanks to the fine work of' >> source/style.css
       echo 'Nicolas Gallagher and Jonathan Neal http://necolas.github.io/normalize.css/' >> source/style.css
       echo '*/' >> source/style.css
-      echo '' >> source/style.css
 
       touch gulpfile.coffee
       echo "###" > gulpfile.coffee

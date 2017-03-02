@@ -22,8 +22,10 @@ path.temp    = './temp'
 path.source  = './source'
 path.build   = './build'
 path.release = './release'
-path.dev     = './dev' # /wp-content/theme
+path.dev     = './dev' # /wp-content/themes
+csso_options = {restructure: false, sourceMap: true, debug: true}
 THEME_PATH   = path.dev
+
 ###
 # General requires
 ###
@@ -48,6 +50,7 @@ gulp.task 'init', (callback) ->
     'init_php'
     'init_js'
     'init_styles'
+    'init_styles_normalize'
     'init_screenshot'
     'init_lang'
     'init_others'
@@ -100,6 +103,10 @@ gulp.task 'init_styles', ->
     .pipe($.replace('_s-', theme.slug+'-'))
     .pipe gulp.dest(path.source+'/styles/')
 
+gulp.task 'init_styles_normalize', ->
+  gulp.src('./include/normalize/**/*.scss')
+    .pipe gulp.dest(path.source+'/styles/')
+
 gulp.task 'init_screenshot', ->
   gulp.src('./include/screenshot.{png,xcf}')
     .pipe gulp.dest(path.source)
@@ -117,9 +124,8 @@ gulp.task 'init_others', ->
 ###
 # Regular tasks
 ###
-
 gulp.task 'dev', (callback) ->
-  THEME_PATH = path.dev
+  THEME_PATH = path.dev+'/'+theme.slug
   runSequence [
     'clean_temp_folder'
     'clean_theme_folder'
@@ -135,6 +141,7 @@ gulp.task 'dev', (callback) ->
 
 gulp.task 'build', (callback) ->
   THEME_PATH = path.build+'/'+theme.slug
+  csso_options = ''
   runSequence [
     'clean_temp_folder'
     'clean_theme_folder'
@@ -164,7 +171,8 @@ gulp.task 'styles_scss', ->
   gulp.src(path.source+'/styles/style.scss')
       .pipe($.sass(errLogToConsole: true).on('error', errorHandler('SASS')))
       .pipe($.autoprefixer('last 2 version'))
-      .pipe($.csso(restructure: false, sourceMap: true, debug: true))
+      .pipe($.stripCssComments(preserve: false))
+      .pipe($.csso(csso_options))
       .pipe gulp.dest('./temp/css/')
 
 gulp.task 'styles_merge', ->
@@ -259,16 +267,14 @@ gulp.task 'copy_php', ->
       .pipe($.changed(THEME_PATH+'/'))
       .pipe gulp.dest(THEME_PATH+'/')
 
-
 gulp.task 'zip', ->
-  gulp.src(THEME_PATH+'/'+theme.slug+'*/**')
+  gulp.src(THEME_PATH+'*/**')
       .pipe($.archiver(THEME_NAME+'.zip').on('error', errorHandler('ZIP Compression')))
       .pipe($.notify(
         title: 'WP Theme builder'
         message: 'Theme already archived to zip file'
         icon: __dirname+'/include/reatlat.png'))
       .pipe gulp.dest(path.release)
-
 
 
 ###
