@@ -50,11 +50,11 @@ gulp.task 'init', (callback) ->
     'init_php'
     'init_js'
     'init_styles'
-    'init_styles_normalize'
     'init_screenshot'
     'init_lang'
     'init_others'
-  ], callback
+  ],
+  'init_styles_normalize', callback
 
 gulp.task 'init_favicons', ->
   gulp.src("./include/logo.png")

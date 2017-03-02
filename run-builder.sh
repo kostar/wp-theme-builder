@@ -36,7 +36,8 @@ main() {
   if [ $SERVICE = "init" ] || [ $SERVICE = "initial" ] || [ $SERVICE = "1" ] ; then
     echo ""
     read -p "  Are you sure you want to initialize new theme? [YES] " newtheme
-    NEWTHEME="${newtheme,,}"
+    NEWTHEME=${newtheme:-'empty'}
+    NEWTHEME="${NEWTHEME,,}"
     if [ $NEWTHEME = "yes" ] ; then
       read -p "  Theme Name:  " theme_name
       read -p "  Theme Slug:  " theme_slug
