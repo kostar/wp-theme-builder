@@ -1,3 +1,15 @@
+###
+# General settings
+###
+theme           = {}
+theme.name      = 'reatlat'
+theme.name_s    = 'reatlat'
+theme.desc      = 'This theme was builded with WP-Theme-builder'
+theme.slug      = 'reatlat-net'
+theme.slug_s    = 'reatlat_net'
+theme.author    = 'Alex Zappa a.k.a. re[at]lat'
+theme.authorUrl = 'https://reatlat.net/'
+
 app          = {}
 app.name     = theme.name # Application name
 app.desc     = theme.desc # This is my application
