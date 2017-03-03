@@ -32,6 +32,7 @@ THEME_PATH   = path.dev
 gulp         = require('gulp')
 runSequence  = require('run-sequence')
 Notification = require('node-notifier')
+pngquant     = require('imagemin-pngquant')
 $ = require('gulp-load-plugins')(
   pattern: [
     'gulp-*'
@@ -134,6 +135,7 @@ gulp.task 'dev', (callback) ->
     'copy_favicons'
     'copy_fonts'
     'copy_images'
+    'copy_others'
     'copy_php'
     'styles'
     'scripts'
@@ -150,7 +152,10 @@ gulp.task 'build', (callback) ->
     'copy_favicons'
     'copy_fonts'
     'copy_images'
+    'copy_others'
     'copy_php'
+  ], [
+    'images_optimize'
     'styles'
     'scripts'
   ], 'zip', callback
@@ -261,6 +266,19 @@ gulp.task 'copy_images', ->
   gulp.src(path.source+'/images/**/*.{jpg,JPG,png,PNG,gif,GIF,svg,SVG}')
       .pipe($.changed(THEME_PATH+'/images/'))
       .pipe gulp.dest(THEME_PATH+'/images/')
+
+gulp.task 'images_optimize', ->
+  gulp.src(THEME_PATH+'/images/**/*')
+    .pipe(imagemin({
+      progressive: true
+      svgoPlugins: [{removeViewBox: false}]
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest(THEME_PATH+'/images/'))
+
+gulp.task 'copy_others', ->
+  gulp.src(THEME_PATH+'/others/**/*')
+    .pipe(gulp.dest(THEME_PATH))
 
 gulp.task 'copy_php', ->
   gulp.src(path.source+'/php/**/*.php')
