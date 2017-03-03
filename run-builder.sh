@@ -38,24 +38,24 @@ main() {
     read -p "  Are you sure you want to initialize new theme? [YES] " newtheme
     NEWTHEME=${newtheme:-'empty'}
     NEWTHEME="${NEWTHEME,,}"
-    if [ $NEWTHEME = "yes" ] ; then
+    if [ $NEWTHEME = "yes" ] || [ $NEWTHEME = "y" ] ; then
       read -p "  Theme Name:  " theme_name
-      read -p "  Theme Slug:  " theme_slug
-      read -p "  Author:      " theme_author
-      read -p "  Author URL:  " theme_author_url
-      read -p "  Description: " theme_desc
-      read -p "  Theme Tags:  " theme_tags
       NAME=${theme_name:-'reatlat'}
       NAME_S=${NAME// /_}
       NAME_S=${NAME_S//-/_}
+      read -p "  Theme Slug:  " theme_slug
       SLUG=${theme_slug:-'reatlat-net'}
       SLUG=${SLUG,,}
       SLUG=${SLUG// /-}
       SLUG_S=${SLUG//-/_}
+      read -p "  Author:      " theme_author
       AUTHOR=${theme_author:-'Alex Zappa a.k.a. re[at]lat'}
+      read -p "  Author URL:  " theme_author_url
       AUTHOR_URL=${theme_author_url:-'https://reatlat.net/'}
-      TAGS='underscores, reatlat, '${theme_author_tags}
+      read -p "  Description: " theme_desc
       DESC=${theme_desc:-'This theme was builded with WP-Theme-builder'}
+      read -p "  Theme Tags:  " theme_tags
+      TAGS='underscores, reatlat, '${theme_author_tags}
       mkdir -p dev
       mkdir -p temp
       mkdir -p release

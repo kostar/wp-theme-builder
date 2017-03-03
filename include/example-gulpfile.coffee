@@ -6,6 +6,19 @@ app.devName  = theme.author # Developer name (Company name)
 app.devURL   = theme.authorUrl # Developer URL (Company URL)
 
 ###
+# TinyPNG API Keys
+###
+tinypng     = {}
+tinypng.key = 0 # choose API from array
+tinypng.api = [
+  # Get your own API key from TinyPNG
+  # @link https://tinypng.com/developers
+  'GET_YOUR_OWN_API_KEY_FOR_TINYPNG' # - client-email-1@example.com
+  'GET_YOUR_OWN_API_KEY_FOR_TINYPNG' # - client-email-2@exmaple.com
+  'GET_YOUR_OWN_API_KEY_FOR_TINYPNG' # - client-email-3@exmaple.com
+  ]
+
+###
 # Default paths
 ###
 TODAY = new Date();
@@ -32,13 +45,18 @@ THEME_PATH   = path.dev
 gulp         = require('gulp')
 runSequence  = require('run-sequence')
 Notification = require('node-notifier')
-pngquant     = require('imagemin-pngquant')
 $ = require('gulp-load-plugins')(
   pattern: [
     'gulp-*'
     'gulp.*'
   ]
   replaceString: /\bgulp[\-.]/)
+
+imagemin = require('imagemin')
+imagemin.gifsicle = require('imagemin-gifsicle')
+imagemin.jpegtran = require('imagemin-jpegtran')
+imagemin.optipng = require('imagemin-optipng')
+imagemin.svgo = require('imagemin-svgo')
 
 gulp.task 'default', [ 'test' ]
 
@@ -268,12 +286,13 @@ gulp.task 'copy_images', ->
       .pipe gulp.dest(THEME_PATH+'/images/')
 
 gulp.task 'images_optimize', ->
-  gulp.src(THEME_PATH+'/images/**/*')
-    .pipe(imagemin({
-      progressive: true
-      svgoPlugins: [{removeViewBox: false}]
-      use: [pngquant()]
-    }))
+  gulp.src(THEME_PATH+'/images/**/*.{jpg,JPG,png,PNG}')
+    .pipe($.tinypngCompress({
+      key: tinypng.api[tinypng.key] # TinyPNG API key
+      sigFile: THEME_PATH+'/images/.tinypng-sigs'
+      summarize: true
+      log: true
+      })) 
     .pipe(gulp.dest(THEME_PATH+'/images/'))
 
 gulp.task 'copy_others', ->
