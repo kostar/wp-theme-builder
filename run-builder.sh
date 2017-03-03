@@ -39,6 +39,7 @@ main() {
     NEWTHEME=${newtheme:-'empty'}
     NEWTHEME="${NEWTHEME,,}"
     if [ $NEWTHEME = "yes" ] || [ $NEWTHEME = "y" ] ; then
+      npm install
       read -p "  Theme Name:  " theme_name
       NAME=${theme_name:-'reatlat'}
       NAME_S=${NAME// /_}
