@@ -39,7 +39,11 @@ main() {
     NEWTHEME=${newtheme:-'empty'}
     NEWTHEME="${NEWTHEME,,}"
     if [ $NEWTHEME = "yes" ] || [ $NEWTHEME = "y" ] ; then
+      echo ""
+      h2 "npm install"
       npm install
+      h3 "All done"
+      echo ""
       echo ""
       read -p "  Theme Name:  " theme_name
       NAME=${theme_name:-'reatlat'}
