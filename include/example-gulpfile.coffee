@@ -52,12 +52,6 @@ $ = require('gulp-load-plugins')(
   ]
   replaceString: /\bgulp[\-.]/)
 
-imagemin = require('imagemin')
-imagemin.gifsicle = require('imagemin-gifsicle')
-imagemin.jpegtran = require('imagemin-jpegtran')
-imagemin.optipng = require('imagemin-optipng')
-imagemin.svgo = require('imagemin-svgo')
-
 gulp.task 'default', [ 'test' ]
 
 ###

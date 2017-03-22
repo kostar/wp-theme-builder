@@ -23,7 +23,7 @@ main() {
   echo -e "  [1] - [INIT]  - Initial project."
   echo -e "  [2] - [DEV]   - Run gulp on dev mode."
   echo -e "  [3] - [BUILD] - Make current build and compress to *.zip file."
-  echo -e "  [0] - [Exit]  - say goodbye =)"
+  echo -e "  [Q] - [Exit]  - say goodbye =)"
   echo -e ""
   read -p "  What do you want to do? " service
   echo -e ""
@@ -40,6 +40,7 @@ main() {
     NEWTHEME="${NEWTHEME,,}"
     if [ $NEWTHEME = "yes" ] || [ $NEWTHEME = "y" ] ; then
       npm install
+      echo ""
       read -p "  Theme Name:  " theme_name
       NAME=${theme_name:-'reatlat'}
       NAME_S=${NAME// /_}
@@ -126,7 +127,7 @@ main() {
   fi
 
   # Go away
-  if [ $SERVICE = "exit" ] || [ $SERVICE = "quit" ] || [ $SERVICE = "0" ] ; then
+  if [ $SERVICE = "exit" ] || [ $SERVICE = "quit" ] || [ $SERVICE = "0" ] || [ $SERVICE = "q" ] ; then
     echo ""
     h2 "See you later,"
     h2 "Have a nice day ;)"
