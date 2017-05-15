@@ -96,7 +96,7 @@ gulp.task 'init_php', ->
   gulp.src('./include/_s/**/*.php')
     .pipe($.replace('\'_s\'', '\''+theme.slug+'\''))
     .pipe($.replace('_s_', theme.slug_s+'_'))
-    .pipe($.replace(' _s', theme.name_s))
+    .pipe($.replace(' _s', ' '+theme.name_s))
     .pipe($.replace('_s-', theme.slug+'-'))
     .pipe gulp.dest(path.source+'/php/')
 
@@ -104,7 +104,7 @@ gulp.task 'init_js', ->
   gulp.src('./include/_s/js/**/*.js')
     .pipe($.replace('\'_s\'', '\''+theme.slug+'\''))
     .pipe($.replace('_s_', theme.slug_s+'_'))
-    .pipe($.replace(' _s', theme.name_s))
+    .pipe($.replace(' _s', ' '+theme.name_s))
     .pipe($.replace('_s-', theme.slug+'-'))
     .pipe gulp.dest(path.source+'/scripts/')
 
@@ -112,7 +112,7 @@ gulp.task 'init_styles', ->
   gulp.src('./include/_s/sass/**/*.scss')
     .pipe($.replace('\'_s\'', '\''+theme.slug+'\''))
     .pipe($.replace('_s_', theme.slug_s+'_'))
-    .pipe($.replace(' _s', theme.name_s))
+    .pipe($.replace(' _s', ' '+theme.name_s))
     .pipe($.replace('_s-', theme.slug+'-'))
     .pipe gulp.dest(path.source+'/styles/')
 
